@@ -26,7 +26,7 @@ namespace FSBrowser
             kernel.BindFilter<PathConvertingFilter>(FilterScope.Controller, 1)
                   .WhenControllerHas<HasPathInputsAttribute>();
 
-            kernel.Bind<IModelBinder>().To<FileSystemInfoBinder>();
+            kernel.Bind<IModelBinder>().To<NullPathBinder>();
             ModelBinders.Binders.DefaultBinder = kernel.Get<IModelBinder>();
 
             return kernel;

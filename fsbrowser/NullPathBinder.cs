@@ -9,9 +9,9 @@ namespace FSBrowser
     /// <summary>
     /// Model binder that maps null path inputs to the home directory.
     /// </summary>
-    public class FileSystemInfoBinder : DefaultModelBinder
+    public class NullPathBinder : DefaultModelBinder
     {
-        public FileSystemInfoBinder(IConfig config, IFileSystem fs)
+        public NullPathBinder(IConfig config, IFileSystem fs)
         {
             Config = config;
             FS = fs;

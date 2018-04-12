@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Web;
 
 namespace FSBrowser.Models
 {
@@ -11,7 +12,7 @@ namespace FSBrowser.Models
     {
         public static string GetMimeType(this FileSystemInfoBase fsinfo)
         {
-            return fsinfo.IsDirectory() ? "inode/directory" : "application/octet-stream";
+            return fsinfo.IsDirectory() ? "inode/directory" : MimeMapping.GetMimeMapping(fsinfo.Name);
         }
 
         public static bool IsDirectory(this FileSystemInfoBase fsinfo)
