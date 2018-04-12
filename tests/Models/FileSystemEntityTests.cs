@@ -111,16 +111,5 @@ namespace FSBrowser.Models.Tests
 
             Assert.That(entity.ReadOnly, Is.False);
         }
-
-        [Test]
-        public void Href_SetInConstructor()
-        {
-            var info = FS.FileInfo.FromFileName(@"c:\home\file.txt");
-            info.Attributes = FileAttributes.Normal;
-
-            var entity = new FileSystemEntity(info, "href");
-
-            Assert.That(entity.Href, Is.EqualTo("href"));
-        }
     }
 }

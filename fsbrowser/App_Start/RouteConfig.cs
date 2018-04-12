@@ -18,8 +18,8 @@ namespace FSBrowser
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{*path}",
-                defaults: new { controller = "Home", action = "Index", path = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

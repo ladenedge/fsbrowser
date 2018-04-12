@@ -6,10 +6,9 @@ namespace FSBrowser.Models
 {
     public class FileSystemEntity
     {
-        public FileSystemEntity(FileSystemInfoBase fsinfo, string href = "")
+        public FileSystemEntity(FileSystemInfoBase fsinfo)
         {
             Info = fsinfo ?? throw new ArgumentNullException(nameof(fsinfo));
-            Href = href;
         }
 
         FileSystemInfoBase Info { get; set; }
@@ -22,6 +21,8 @@ namespace FSBrowser.Models
         public string MimeType => Info.GetMimeType();
         public bool ReadOnly => Info.IsReadOnly();
 
-        public string Href { get; set; }
+        public string Self { get; set; }
+        public string Parent { get; set; }
+        public string Children { get; set; }
     }
 }

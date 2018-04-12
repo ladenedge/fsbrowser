@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Web.Mvc;
@@ -16,7 +15,7 @@ namespace FSBrowser.Controllers
 
         IFileSystem FS { get; set; }
 
-        public ActionResult Root([FromPath] FileInfoBase path)
+        public ActionResult Index([FromPath] FileInfoBase path)
         {
             var entity = new FileSystemEntity(path);
             return File(path.FullName, entity.MimeType);

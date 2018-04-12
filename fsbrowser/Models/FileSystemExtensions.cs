@@ -25,6 +25,15 @@ namespace FSBrowser.Models
             return (fsinfo.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
         }
 
+        public static DirectoryInfoBase Parent(this FileSystemInfoBase fsinfo)
+        {
+            if (fsinfo is DirectoryInfoBase di)
+                return di.Parent;
+            else if (fsinfo is FileInfoBase fi)
+                return fi.Directory;
+            throw new ArgumentException("Unexpected FileSystemInfo implementation");
+        }
+
         static IDictionary<Type, Func<IFileSystem, string, FileSystemInfoBase>> InfoFactories = new Dictionary<Type, Func<IFileSystem, string, FileSystemInfoBase>>
         {
             [typeof(FileInfoBase)] = (fs, path) => fs.FileInfo.FromFileName(path),

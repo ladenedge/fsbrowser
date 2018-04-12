@@ -21,7 +21,7 @@ namespace FSBrowser
             kernel.Bind<IConfig>().To<AppSettingsConfig>();
             kernel.Bind<IFileSystem>().To<FileSystem>();
 
-            kernel.BindFilter<PathRootingFilter>(FilterScope.Controller, 0)
+            kernel.BindFilter<PathInitializationFilter>(FilterScope.Controller, 0)
                   .WhenControllerHas<HasPathInputsAttribute>();
             kernel.BindFilter<PathConvertingFilter>(FilterScope.Controller, 1)
                   .WhenControllerHas<HasPathInputsAttribute>();

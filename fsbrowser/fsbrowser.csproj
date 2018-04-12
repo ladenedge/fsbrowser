@@ -110,14 +110,14 @@
   <ItemGroup>
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Filters\HasPathInputsAttribute.cs" />
+    <Compile Include="Filters\PathInitializationFilter.cs" />
     <Compile Include="NullPathBinder.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\FilesystemController.cs" />
+    <Compile Include="Controllers\DirectoriesController.cs" />
     <Compile Include="AppSettingsConfig.cs" />
     <Compile Include="Filters\ActionExecutingContextExtensions.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Filters\PathFilter.cs" />
-    <Compile Include="Filters\PathRootingFilter.cs" />
     <Compile Include="Filters\FromPathAttribute.cs" />
     <Compile Include="Filters\PathConvertingFilter.cs" />
     <Compile Include="Global.asax.cs">

@@ -100,7 +100,7 @@
   <ItemGroup>
     <Compile Include="AppSettingsConfigTests.cs" />
     <Compile Include="Filters\PathConvertingFilterTests.cs" />
-    <Compile Include="Filters\PathRootingFilterTests.cs" />
+    <Compile Include="Filters\PathInitializationFilterTests.cs" />
     <Compile Include="Models\FileSystemEntityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
