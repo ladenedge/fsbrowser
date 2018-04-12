@@ -1,9 +1,65 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <title>Jay's Filesystem Browser</title>
+    <link href="/fsbrowser/Content/styles/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	Hello!
+    <div class="container">
+        <div class="file-list">
+            <div class="header">
+                <a href="#" data-bind="click: () => changeDir(currentDir().parent), attr: { title: currentDir().parent && ('Return to ' + currentDir().parent.name()) }, visible: !currentDir().isRoot">🔙</a>
+                <span class="separator">/</span>
+                <span data-bind="text: currentDir().name(), visible: !currentDir().isRoot"></span>
+                <span class="separator" data-bind="visible: !currentDir().isRoot">|</span>
+                <span data-bind="text: currentDir().children().length"></span> items
+                <span class="separator">|</span>
+                <a href="#" target="_blank" title="Home" data-bind="click: () => changeDir(root)">🏠</a>
+                <span class="separator">|</span>
+                Clipboard: <span data-bind="text: clipboard() ? clipboard().fullPath() : '(empty)', css: { diminished: !clipboard() }"></span>
+                           <a href="#" target="_blank" title="Paste" data-bind="visible: !!clipboard()">📋</a>
+            </div>
+            <div class="file-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="15%"></th>
+                            <th width="50%">Name</th>
+                            <th width="20%">Modified</th>
+                            <th width="15%">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: currentDir().children()">
+                        <tr>
+                            <td class="actions">
+                                <a href="#" title="Cut">✂️</a>
+                                <span class="separator">|</span>
+                                <a href="#" title="Copy">📝</a>
+                                <span class="separator">|</span>
+                                <a href="#" title="Delete">❌</a>
+                                <span class="separator" data-bind="visible: !isDir()">|</span>
+                                <a target="_blank" href="#" title="Download" data-bind="attr { href: href() }, visible: !isDir()">💾</a>
+                            </td>
+                            <td class="name">
+                                <span data-bind="text: icon"></span>
+                                <a href="#" target="_blank" data-bind="click: () => { $parent.changeDir($data) }, text: name(), visible: isDir()"></a>
+                                <span data-bind="text: name(), visible: !isDir()"></span>
+                            </td>
+                            <td class="date" data-bind="text: mtime"></td>
+                            <td class="size" data-bind="text: size()"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="console">
+            <textarea rows="25"></textarea>
+        </div>
+    </div>
+
+    <script src="/fsbrowser/Content/scripts/jquery/jquery.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/knockout/knockout.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/main.js" type="text/javascript"></script>
 </body>
 </html>

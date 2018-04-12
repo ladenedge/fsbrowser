@@ -7,7 +7,7 @@ using System.Linq;
 using FSBrowser.Filters;
 using NUnit.Framework;
 
-namespace FSBrowser.Models.Tests
+namespace FSBrowser.Filters.Tests
 {
     public class PathConvertingFilterTests
     {

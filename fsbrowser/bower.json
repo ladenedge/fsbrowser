@@ -6,6 +6,6 @@
     "knockout": "^3.4.2"
   },
   "install": {
-    "path": "Scripts/lib"
+    "path": "Content/scripts"
   }
 }

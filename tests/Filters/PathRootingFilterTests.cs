@@ -8,7 +8,7 @@ using FSBrowser.Filters;
 using Moq;
 using NUnit.Framework;
 
-namespace FSBrowser.Models.Tests
+namespace FSBrowser.Filters.Tests
 {
     public class PathRootingFilterTests
     {
