@@ -26,6 +26,7 @@ function FileListViewModel() {
 
     this.fetchItem = (hashKey, shouldPush) => {
         // of the form: #<fullpath>(<filter>/g)
+        hashKey = hashKey || '';
         var [s1, path, s2, filter, recursive] = hashKey.match(/#?([^#(]*)(\(([^\/]*)\/?(g)?\))?/);
         this.filter(filter);
         this.recursive(!!recursive);
@@ -95,4 +96,15 @@ function FileListViewModel() {
         .done(rsp => ko.applyBindings(this));
 }
 
+ko.bindingHandlers.slideVisible = {
+    init: function (element, valueAccessor) {
+        var value = valueAccessor();
+        $(element).toggle(ko.unwrap(value));
+    },
+    update: function (element, valueAccessor) {
+        var value = valueAccessor();
+        ko.unwrap(value) ? $(element).slideDown(100) : $(element).slideUp(50);
+    }
+};
+ 
 var Model = new FileListViewModel();

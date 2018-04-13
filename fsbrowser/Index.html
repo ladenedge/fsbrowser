@@ -22,7 +22,7 @@
                 <button data-bind="click: () => changeDir(currentDir(), true)">Search</button>
                 <button data-bind="click: resetFilter">Clear</button>
             </div>
-            <div class="header" data-bind="visible: clipboard">
+            <div class="header" data-bind="slideVisible: clipboard">
                 Clipboard:
                 <span class="clipboard" data-bind="visible: clipboard(), text: clipboard() && clipboard().item.fullPath, attr: { title: clipboard() && clipboard().item.fullPath }"></span>
                 <span class="empty" data-bind="visible: !clipboard()">(empty)</span>
