@@ -7,6 +7,8 @@ function Item(data) {
     this.size = formatSize(data.Size, this.isDir);
     this.mtime = formatTime(data.MTime);
     this.readOnly = data.ReadOnly;
+    this.filter = data.Filter;
+    this.recursive = data.Recursive;
     this.href = data.Self;
     this.hrefParent = data.Parent;
     this.hrefChildren = data.Children;
@@ -14,8 +16,13 @@ function Item(data) {
     this.icon = this.isDir ? '📂 ' : '📄 ';
     this.isRoot = this.fullPath.match(/\w:\\?$/);
 
-    this.fetchChildren = function () {
-        $.getJSON(this.hrefChildren, rsp => {
+    this.fetchChildren = (filter, recursive) => {
+
+        var uri = this.hrefChildren;
+        if (filter)
+            uri += `&filter=${filter}&recursive=${recursive}`;
+
+        $.getJSON(uri, rsp => {
             var items = $.map(rsp, i => new Item(i, this))
                 .sort((a, b) => b.isDir - a.isDir || a.name.localeCompare(b.name));
             this.children(items);

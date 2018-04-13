@@ -25,7 +25,7 @@ a {
 .header {
     margin-top: 20px;
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 21px;
     white-space: nowrap;
 }
 
@@ -35,16 +35,36 @@ a {
     margin-right: 10px;
 }
 
+input {
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 4px #eee;
+    padding: 5px;
+    font-size: 17px;
+}
+
+    input[type=checkbox] {
+        transform: scale(2);
+    }
+
+button {
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #428bca;
+    color: #fff;
+    box-shadow: 1px 1px 4px #eee;
+    border-radius: 3px;
+}
+
 .clipboard {
     background-color: #eee;
     padding: 0 5px 2px;
     border-radius: 4px;
-    direction: rtl;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
     display: inline-block;
     vertical-align: bottom;
-    width: 30%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    width: 80%;
 }
 
 .empty {

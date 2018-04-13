@@ -23,7 +23,8 @@ namespace FSBrowser.Filters
 
         [Inject]
         public IFileSystem FS { get; set; }
-        string ParameterName { get; set; }
+        public string ParameterName { get; set; }
+        public string UnlessSet { get; set; }
 
         /// <summary>
         /// Abort the action if the If-None-Match value.. matches.
@@ -32,7 +33,7 @@ namespace FSBrowser.Filters
         {
             var path = filterContext.Controller.ValueProvider.GetValue(ParameterName)?.AttemptedValue;
             var matchHeader = filterContext.HttpContext.Request.Headers["If-None-Match"];
-            if (String.IsNullOrEmpty(path) || matchHeader == null)
+            if (String.IsNullOrEmpty(path) || matchHeader == null || !ShouldTagThisRequest(filterContext.Controller))
                 return;
 
             var info = FS.PathToInfo(path, typeof(FileSystemInfoBase));
@@ -47,12 +48,21 @@ namespace FSBrowser.Filters
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var path = filterContext.Controller.ValueProvider.GetValue(ParameterName)?.AttemptedValue;
-            if (String.IsNullOrEmpty(path))
+            if (String.IsNullOrEmpty(path) || !ShouldTagThisRequest(filterContext.Controller))
                 return;
 
             var info = FS.PathToInfo(path, typeof(FileSystemInfoBase));
 
             filterContext.HttpContext.Response.Headers["ETag"] = info.LastWriteTimeUtc.Ticks.ToString();
+        }
+
+        bool ShouldTagThisRequest(ControllerBase ctrl)
+        {
+            if (String.IsNullOrEmpty(UnlessSet))
+                return true;
+
+            var unless = ctrl.ValueProvider.GetValue(UnlessSet)?.AttemptedValue;
+            return String.IsNullOrEmpty(unless);
         }
     }
 }

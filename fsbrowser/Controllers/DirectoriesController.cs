@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Web.Mvc;
@@ -52,10 +53,12 @@ namespace FSBrowser.Controllers
         /// <summary>
         /// Gets metadata for all of a directory's children.
         /// </summary>
-        [HttpGet, ETagged("path")]
-        public ActionResult Children([FromPath] DirectoryInfoBase path)
+        [HttpGet, ETagged("path", UnlessSet = "filter")]
+        public ActionResult Children([FromPath] DirectoryInfoBase path, string filter, bool? recursive)
         {
-            return Json(path.GetFileSystemInfos().Select(i => EntityFor(i)), JsonRequestBehavior.AllowGet);
+            var opt = recursive.HasValue && recursive.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            var infos = String.IsNullOrEmpty(filter) ? path.GetFileSystemInfos() : path.GetFileSystemInfos(filter, opt);
+            return Json(infos.Select(i => EntityFor(i)), JsonRequestBehavior.AllowGet);
         }
 
 

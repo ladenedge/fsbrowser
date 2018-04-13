@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Jay's Filesystem Browser</title>
-    <link href="/Content/styles/main.css" rel="stylesheet" type="text/css" />
+    <link href="/fsbrowser/Content/styles/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="container">
         <div class="file-list">
             <div class="header">
-                <a href="#" data-bind="click: () => fetchItem(currentDir().parentPath(), true), attr: { title: 'Return to ' + currentDir().parentName() }, visible: !currentDir().isRoot">🔙</a>
+                <a href="#" data-bind="click: () => fetchItem(currentDir().parentPath(), true), attr: { title: 'Up to ' + currentDir().parentName() }, visible: !currentDir().isRoot">⤴️</a>
                 <span class="separator">/</span>
                 <span data-bind="text: currentDir().name, visible: !currentDir().isRoot"></span>
                 <span class="separator" data-bind="visible: !currentDir().isRoot">|</span>
@@ -16,12 +16,20 @@
                 <span class="separator">|</span>
                 <a href="#" target="_blank" title="Home" data-bind="click: () => fetchItem(null, true)">🏠</a>
                 <span class="separator">|</span>
+                Filter:
+                <input data-bind="textInput: filter" />
+                <input type="checkbox" id="recursive" data-bind="checked: recursive" /> <label for="recursive">Recursive</label>
+                <button data-bind="click: () => changeDir(currentDir(), true)">Search</button>
+                <button data-bind="click: resetFilter">Clear</button>
+            </div>
+            <div class="header" data-bind="visible: clipboard">
                 Clipboard:
-                <span class="clipboard" data-bind="visible: clipboard(), text: clipboard() && clipboard().item.fullPath"></span>
+                <span class="clipboard" data-bind="visible: clipboard(), text: clipboard() && clipboard().item.fullPath, attr: { title: clipboard() && clipboard().item.fullPath }"></span>
                 <span class="empty" data-bind="visible: !clipboard()">(empty)</span>
                 <a href="#" title="Paste" data-bind="click: paste(), visible: !!clipboard()">📋</a>
                 <a href="#" title="Clear clipboard" data-bind="click: clipboard(null), visible: !!clipboard()">❌</a>
             </div>
+            <hr />
             <div class="file-table">
                 <table>
                     <thead>
@@ -57,9 +65,9 @@
         </div>
     </div>
 
-    <script src="/Content/scripts/jquery/jquery.js" type="text/javascript"></script>
-    <script src="/Content/scripts/knockout/knockout.js" type="text/javascript"></script>
-    <script src="/Content/scripts/item.js" type="text/javascript"></script>
-    <script src="/Content/scripts/main.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/jquery/jquery.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/knockout/knockout.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/item.js" type="text/javascript"></script>
+    <script src="/fsbrowser/Content/scripts/main.js" type="text/javascript"></script>
 </body>
 </html>
