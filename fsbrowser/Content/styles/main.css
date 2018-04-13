@@ -46,11 +46,11 @@ a {
 }
 
 .file-list {
-    height: 35%;
+    height: 85vh;
 }
 
 .file-table {
-    height: 85%;
+    height: 100%;
     overflow-y: auto;
     position: relative;
 }
