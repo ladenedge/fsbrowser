@@ -1,5 +1,5 @@
 ﻿
-var appRoot = '/fsbrowser/';
+var appRoot = '/';
 
 function FileListViewModel() {
     this.currentDir = ko.observable(null);

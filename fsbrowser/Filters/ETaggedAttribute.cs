@@ -32,7 +32,7 @@ namespace FSBrowser.Filters
         {
             var path = filterContext.Controller.ValueProvider.GetValue(ParameterName)?.AttemptedValue;
             var matchHeader = filterContext.HttpContext.Request.Headers["If-None-Match"];
-            if (path == null || matchHeader == null)
+            if (String.IsNullOrEmpty(path) || matchHeader == null)
                 return;
 
             var info = FS.PathToInfo(path, typeof(FileSystemInfoBase));
@@ -47,7 +47,7 @@ namespace FSBrowser.Filters
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var path = filterContext.Controller.ValueProvider.GetValue(ParameterName)?.AttemptedValue;
-            if (path == null)
+            if (String.IsNullOrEmpty(path))
                 return;
 
             var info = FS.PathToInfo(path, typeof(FileSystemInfoBase));
