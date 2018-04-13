@@ -112,9 +112,9 @@ namespace FSBrowser.Models
                 return (string dest) => fs.File.Move(source.FullName, dest);
             if (!source.IsDirectory() && !removeSource)
                 return (string dest) => fs.File.Copy(source.FullName, dest);
-            if (!source.IsDirectory() && removeSource)
+            if (source.IsDirectory() && removeSource)
                 return (string dest) => fs.Directory.Move(source.FullName, dest);
-            if (!source.IsDirectory() && !removeSource)
+            if (source.IsDirectory() && !removeSource)
                 return (string dest) => Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(source.FullName, dest);
 
             throw new ArgumentException($"Could not paste '{source.Name}");
