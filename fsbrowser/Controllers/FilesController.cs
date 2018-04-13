@@ -18,7 +18,7 @@ namespace FSBrowser.Controllers
         public ActionResult Index([FromPath] FileInfoBase path)
         {
             var entity = new FileSystemEntity(path);
-            return File(path.FullName, entity.MimeType);
+            return File(path.FullName, entity.MimeType, path.Name);
         }
 
         /// <summary>
