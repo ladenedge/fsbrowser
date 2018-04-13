@@ -26,6 +26,14 @@ namespace FSBrowser.Controllers
             return Json(EntityFor(path), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpDelete]
+        [ActionName("Index")]
+        public ActionResult IndexDelete([FromPath] DirectoryInfoBase path)
+        {
+            path.Delete(true);
+            return new EmptyResult();
+        }
+
         public ActionResult Children([FromPath] DirectoryInfoBase path)
         {
             return Json(path.GetFileSystemInfos().Select(i => EntityFor(i)), JsonRequestBehavior.AllowGet);

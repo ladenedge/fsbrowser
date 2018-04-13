@@ -8,16 +8,17 @@
     <div class="container">
         <div class="file-list">
             <div class="header">
-                <a href="#" data-bind="click: () => changeDir(currentDir().parent), attr: { title: currentDir().parent && ('Return to ' + currentDir().parent.name()) }, visible: !currentDir().isRoot">🔙</a>
+                <a href="#" data-bind="click: () => fetchItem(currentDir().parentPath(), true), attr: { title: 'Return to ' + currentDir().parentName() }, visible: !currentDir().isRoot">🔙</a>
                 <span class="separator">/</span>
-                <span data-bind="text: currentDir().name(), visible: !currentDir().isRoot"></span>
+                <span data-bind="text: currentDir().name, visible: !currentDir().isRoot"></span>
                 <span class="separator" data-bind="visible: !currentDir().isRoot">|</span>
-                <span data-bind="text: currentDir().children().length"></span> items
+                <span data-bind="text: currentDir().children().length"></span> item<span data-bind="visible: currentDir().children().length != 1">s</span>
                 <span class="separator">|</span>
-                <a href="#" target="_blank" title="Home" data-bind="click: () => changeDir(root)">🏠</a>
+                <a href="#" target="_blank" title="Home" data-bind="click: () => fetchItem(null, true)">🏠</a>
                 <span class="separator">|</span>
-                Clipboard: <span data-bind="text: clipboard() ? clipboard().fullPath() : '(empty)', css: { diminished: !clipboard() }"></span>
-                           <a href="#" target="_blank" title="Paste" data-bind="visible: !!clipboard()">📋</a>
+                Clipboard: <span class="clipboard" data-bind="text: clipboard() ? clipboard().fullPath : '(empty)', css: { empty: !clipboard() }"></span>
+                <a href="#" target="_blank" title="Paste" data-bind="click: paste(), visible: !!clipboard()">📋</a>
+                <a href="#" target="_blank" title="Clear clipboard" data-bind="click: clipboard(null), visible: !!clipboard()">❌</a>
             </div>
             <div class="file-table">
                 <table>
@@ -32,29 +33,25 @@
                     <tbody data-bind="foreach: currentDir().children()">
                         <tr>
                             <td class="actions">
-                                <a href="#" title="Cut">✂️</a>
-                                <span class="separator">|</span>
-                                <a href="#" title="Copy">📝</a>
-                                <span class="separator">|</span>
-                                <a href="#" title="Delete">❌</a>
-                                <span class="separator" data-bind="visible: !isDir()">|</span>
-                                <a target="_blank" href="#" title="Download" data-bind="attr { href: href() }, visible: !isDir()">💾</a>
+                                <a href="#" title="Copy" data-bind="click: () => { $parent.clipboardOp('copy'); $parent.clipboard($data); }">📝</a>
+                                <span class="separator" data-bind="visible: !readOnly">|</span>
+                                <a href="#" title="Cut" data-bind="visible: !readOnly, click: () => { $parent.clipboardOp('cut'); $parent.clipboard($data); }">✂️</a>
+                                <span class="separator" data-bind="visible: !readOnly">|</span>
+                                <a href="#" title="Delete" data-bind="visible: !readOnly, click: () => { $parent.delete($data) }">🗑️</a>
+                                <span class="separator" data-bind="visible: !isDir">|</span>
+                                <a href="#" target="_blank" title="Download" data-bind="attr: { href: href }, visible: !isDir">💾</a>
                             </td>
                             <td class="name">
                                 <span data-bind="text: icon"></span>
-                                <a href="#" target="_blank" data-bind="click: () => { $parent.changeDir($data) }, text: name(), visible: isDir()"></a>
-                                <span data-bind="text: name(), visible: !isDir()"></span>
+                                <a href="#" target="_blank" data-bind="click: () => { $parent.changeDir($data, true) }, text: name, visible: isDir"></a>
+                                <span data-bind="text: name, visible: !isDir"></span>
                             </td>
                             <td class="date" data-bind="text: mtime"></td>
-                            <td class="size" data-bind="text: size()"></td>
+                            <td class="size" data-bind="text: size"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <hr />
-        <div class="console">
-            <textarea rows="25"></textarea>
         </div>
     </div>
 

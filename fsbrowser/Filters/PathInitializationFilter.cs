@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO.Abstractions;
 
 namespace FSBrowser.Filters
 {
@@ -20,7 +21,11 @@ namespace FSBrowser.Filters
         /// <returns>The supplied path, or our home directory.</returns>
         protected override object AdjustPath(string path, Type intendedType)
         {
-            return String.IsNullOrEmpty(path) ? Config.HomeDirectory : path;
+            if (String.IsNullOrEmpty(path))
+                return Config.HomeDirectory;
+            if (intendedType == typeof(DirectoryInfoBase))
+                return path.EndsWith(@"\") ? path : path + @"\";
+            return path;
         }
     }
 }

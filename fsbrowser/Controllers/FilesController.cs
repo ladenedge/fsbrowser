@@ -15,10 +15,19 @@ namespace FSBrowser.Controllers
 
         IFileSystem FS { get; set; }
 
+        [HttpGet]
         public ActionResult Index([FromPath] FileInfoBase path)
         {
             var entity = new FileSystemEntity(path);
             return File(path.FullName, entity.MimeType);
+        }
+
+        [HttpDelete]
+        [ActionName("Index")]
+        public ActionResult IndexDelete([FromPath] FileInfoBase path)
+        {
+            path.Delete();
+            return new EmptyResult();
         }
     }
 }
