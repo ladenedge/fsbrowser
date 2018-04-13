@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -61,6 +62,7 @@
     <Reference Include="System.IO.Abstractions, Version=2.1.0.178, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Abstractions.2.1.0.178\lib\net40\System.IO.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -97,19 +99,17 @@
   <ItemGroup>
     <Content Include="Content\scripts\jquery\jquery.js" />
     <Content Include="Content\scripts\knockout\knockout.js" />
-    <Content Include="Content\scripts\fsitem.js" />
+    <Content Include="Content\scripts\item.js" />
     <Content Include="Content\scripts\main.js" />
     <Content Include="Content\styles\main.css" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
-    <Content Include="Scripts\app\router.js" />
-    <Content Include="Scripts\app\app.js" />
-    <Content Include="Scripts\app\main.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Filters\HasPathInputsAttribute.cs" />
+    <Compile Include="Filters\ETaggedAttribute.cs" />
     <Compile Include="Filters\PathInitializationFilter.cs" />
     <Compile Include="NullPathBinder.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

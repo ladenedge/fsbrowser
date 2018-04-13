@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,45 +11,60 @@ namespace FSBrowser.Controllers
     [HasPathInputs]
     public class DirectoriesController : Controller
     {
-        public DirectoriesController(IConfig config, IFileSystem fs)
-        {
-            Config = config;
-            FS = fs;
-        }
+        public DirectoriesController(IFileSystem fs) => FS = fs;
 
-        IConfig Config { get; set; }
         IFileSystem FS { get; set; }
 
+        /// <summary>
+        /// Gets directory metadata.
+        /// </summary>
+        [HttpGet, ETagged("path")]
         public ActionResult Index([FromPath] DirectoryInfoBase path)
         {
             return Json(EntityFor(path), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpDelete]
-        [ActionName("Index")]
+        /// <summary>
+        /// Deletes a directory.
+        /// </summary>
+        [HttpDelete, ActionName("Index")]
         public ActionResult IndexDelete([FromPath] DirectoryInfoBase path)
         {
             path.Delete(true);
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Copies or moves a filesystem entity.
+        /// </summary>
+        [HttpPut, ActionName("Index")]
+        public ActionResult IndexPaste([FromPath] DirectoryInfoBase path, [FromPath] FileSystemInfoBase source, bool removeSource = false)
+        {
+            var newPath = FS.Path.Combine(path.FullName, source.Name);
+            var pasteTo = FS.GetPasterFor(source, removeSource);
+
+            pasteTo(newPath);
+
+            var entity = EntityFor(FS.PathToInfo(newPath, source.GetType()));
+            return Json(entity);
+        }
+
+        /// <summary>
+        /// Gets metadata for all of a directory's children.
+        /// </summary>
+        [HttpGet, ETagged("path")]
         public ActionResult Children([FromPath] DirectoryInfoBase path)
         {
             return Json(path.GetFileSystemInfos().Select(i => EntityFor(i)), JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPut]
-        //public ActionResult Paste([FromPath] DirectoryInfoBase path, [FromPath] FileSystemInfoBase source)
-        //{
-        //    var dinfo = FS.DirectoryInfo.FromDirectoryName(dir);
-        //    return Json(dinfo.GetFileSystemInfos());
-        //}
 
         FileSystemEntity EntityFor(FileSystemInfoBase info)
         {
             var controller = info.IsDirectory() ? "directories" : "files";
             var parent = info.Parent();
 
+            // Fills out the entity object with the controller's URL helper.
             return new FileSystemEntity(info)
             {
                 Self = Url.Action("", controller, new { path = info.FullName }, Request.Url.Scheme),

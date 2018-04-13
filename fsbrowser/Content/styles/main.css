@@ -26,6 +26,7 @@ a {
     margin-top: 20px;
     margin-bottom: 10px;
     font-size: 24px;
+    white-space: nowrap;
 }
 
 .header > .separator {
@@ -38,9 +39,16 @@ a {
     background-color: #eee;
     padding: 0 5px 2px;
     border-radius: 4px;
+    direction: rtl;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 30%;
 }
 
 .empty {
+    direction: ltr;
     background-color: white;
     color: #aaa;
 }
